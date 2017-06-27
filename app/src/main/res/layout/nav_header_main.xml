@@ -1,0 +1,64 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="164dp"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/cover"
+        android:background="@drawable/side_nav_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="16dp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/userimage"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/bus"
+            android:backgroundTint="#ffffff"
+            android:layout_margin="12dp"
+            android:layout_marginTop="10dp" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/useremail"
+            android:layout_gravity="bottom"
+            android:fontFamily="sans-serif-medium"
+            android:paddingLeft="16dp"
+            android:text=""
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/useremail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:paddingBottom="8dp"
+            android:paddingLeft="16dp"
+            android:text="minu.sarraf@gmail.com"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+    </RelativeLayout>
+
+</FrameLayout>
+
+
+
+
+
+
+
+
+
+
+
