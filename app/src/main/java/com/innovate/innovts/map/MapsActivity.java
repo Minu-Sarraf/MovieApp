@@ -43,6 +43,7 @@ import com.innovate.innovts.HttpResponse;
 import com.innovate.innovts.Permission;
 import com.innovate.innovts.R;
 import com.innovate.innovts.UICallback;
+import com.innovate.innovts.checkinternet;
 
 
 import java.util.List;
@@ -90,19 +91,21 @@ public class MapsActivity extends Fragment implements plotmap.mapplot, UICallbac
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         if (position > 0) {
-            HttpResponse.listener("position", "http://103.254.180.108:8082/api/positions", this, spinner.getSelectedItemPosition());
+            if (!checkinternet.displaynetstatus(getActivity(), true)) {
+                HttpResponse.listener("position", "http://103.254.180.108:8082/api/positions", this, spinner.getSelectedItemPosition());
 
-            handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    // Do something after 5s = 5000ms
+                handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        // Do something after 5s = 5000ms
 
-                    HttpResponse.listener("position", "http://103.254.180.108:8082/api/positions", MapsActivity.this, spinner.getSelectedItemPosition());
-                    handler.postDelayed(this,10000);
+                        HttpResponse.listener("position", "http://103.254.180.108:8082/api/positions", MapsActivity.this, spinner.getSelectedItemPosition());
+                        handler.postDelayed(this, 20000);
 
-                }
-            }, 10000);
+                    }
+                }, 10000);
+            }
             Log.e("item", spinner.getSelectedItemPosition() + "pos" + spinner.getSelectedItemId());
        /* latlngdrop = new LatLng(27.681724721752698, 85.52912872284651);
         if (position > 1) {
@@ -409,12 +412,16 @@ public class MapsActivity extends Fragment implements plotmap.mapplot, UICallbac
                 .icon(BitmapDescriptorFactory.fromBitmap(smallMarker)));
         childMarker.showInfoWindow();
     }
+@Override
+public void onPause(){
+    super.onPause();
 
+}
     @Override
     public void onDestroy() {
         super.onDestroy();
 
-       // handler.removeCallbacks();
+//        handler.removeCallbacks((Runnable) MapsActivity.this);
 
     }
 

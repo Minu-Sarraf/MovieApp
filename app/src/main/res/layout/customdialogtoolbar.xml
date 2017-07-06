@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/fade"
+    android:theme="@style/MyCustomToolbar"
+
+    app:popupTheme="@style/AppTheme.PopupOverlay">
+
+    <ImageButton
+        android:layout_width="30dp"
+        android:layout_height="20dp"
+        android:background="@drawable/ic_error_red_a200_18dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:paddingLeft="25dp"
+        android:text="OOPS! ERROR..."
+
+        android:textSize="18sp" />
+    <!--<include layout="@layout/content_main"/>-->
+
+</android.support.v7.widget.Toolbar>

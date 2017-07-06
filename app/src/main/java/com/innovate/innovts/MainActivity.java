@@ -86,6 +86,11 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+@Override
+public void onPause(){
+    super.onPause();
+    getSupportFragmentManager().beginTransaction().remove(new MapsActivity());
+}
 
     private void startlocation() {
         sharedpreferences = this.getSharedPreferences("login", MODE_PRIVATE);
@@ -184,6 +189,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
+        fragment();
     }
 
 
