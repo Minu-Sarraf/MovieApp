@@ -14,7 +14,6 @@ import java.util.Calendar;
  */
 public class checkinternet {
 
-
     public static boolean isWifiEnable() {
         return isWifiEnable;
     }
@@ -36,16 +35,12 @@ public class checkinternet {
     public static boolean isNetWorkAvailableNow(Context context) {
 
         boolean isNetworkAvailable = false;
-
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
         setIsWifiEnable(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).isConnected());
         setIsMobileNetworkAvailable(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).isConnected());
 
         if (isWifiEnable() || isMobileNetworkAvailable()) {
-        /*Sometime wifi is connected but service provider never connected to internet
-        so cross check one more time*/
-           // if (isOnline())
                 isNetworkAvailable = true;
         }
 

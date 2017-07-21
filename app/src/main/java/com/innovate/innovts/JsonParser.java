@@ -39,11 +39,11 @@ public class JsonParser {
     private boolean valid;
     private double latitude;
     private double longitude;
-    private int altitude;
+    private double altitude;
     private double speed;
-    private int course;
+    private double course;
     private String address;
-    private int accuracy;
+    private double accuracy;
     private Object network;
 
     public int getId() {
@@ -142,11 +142,11 @@ public class JsonParser {
         this.longitude = longitude;
     }
 
-    public int getAltitude() {
+    public double getAltitude() {
         return altitude;
     }
 
-    public void setAltitude(int altitude) {
+    public void setAltitude(double altitude) {
         this.altitude = altitude;
     }
 
@@ -158,7 +158,7 @@ public class JsonParser {
         this.speed = speed;
     }
 
-    public int getCourse() {
+    public double getCourse() {
         return course;
     }
 
@@ -174,7 +174,7 @@ public class JsonParser {
         this.address = address;
     }
 
-    public int getAccuracy() {
+    public double getAccuracy() {
         return accuracy;
     }
 

@@ -1,7 +1,7 @@
 package com.innovate.innovts;
 
 import java.util.ArrayList;
-
+import java.util.List;
 
 
 /**
@@ -11,5 +11,7 @@ public interface UICallback {
     void update(double urltype, double uri, String address);
     void refresh_interface(String b, int a);
 
-   // void updatefcm(String urltype, ArrayList<Notification_history.ResponseBean> responseBeans);
+    void getName(List<String> name);
+
+    // void updatefcm(String urltype, ArrayList<Notification_history.ResponseBean> responseBeans);
 }

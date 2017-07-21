@@ -106,9 +106,9 @@ public class plotmap {
 
     // Fetches data from url passed
     public static class DownloadTask extends AsyncTask<String, PolylineOptions, String> {
-        private final MapsActivity activity;
+        private final MapsFragment activity;
 
-        public DownloadTask(MapsActivity mmap) {
+        public DownloadTask(MapsFragment mmap) {
             this.activity = mmap;
         }
 
@@ -143,9 +143,9 @@ public class plotmap {
         }
 
         private static class ParserTask extends AsyncTask<String, Integer, List<List<HashMap<String, String>>>> {
-            private final MapsActivity activity;
+            private final MapsFragment activity;
 
-            public ParserTask(MapsActivity mmap) {
+            public ParserTask(MapsFragment mmap) {
                 this.activity = mmap;
             }
 

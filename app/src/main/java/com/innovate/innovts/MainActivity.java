@@ -1,17 +1,13 @@
 package com.innovate.innovts;
 
-import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.LocationManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputLayout;
 
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.AppCompatTextView;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -29,9 +25,7 @@ import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.plus.Plus;
-import com.innovate.innovts.map.MapsActivity;
-
-import de.hdodenhof.circleimageview.CircleImageView;
+import com.innovate.innovts.map.MapsFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
@@ -78,7 +72,7 @@ public class MainActivity extends AppCompatActivity
                 public void run() {
                     if (!isFinishing()) {
 
-                        getSupportFragmentManager().beginTransaction().replace(R.id.middlelayout, new MapsActivity(), "mapfrom").commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.middlelayout, new MapsFragment(), "mapfrom").commit();
                     }
                 }
             }, 1000);
@@ -89,7 +83,7 @@ public class MainActivity extends AppCompatActivity
 @Override
 public void onPause(){
     super.onPause();
-    getSupportFragmentManager().beginTransaction().remove(new MapsActivity());
+    getSupportFragmentManager().beginTransaction().remove(new MapsFragment());
 }
 
     private void startlocation() {

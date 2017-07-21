@@ -11,8 +11,9 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -46,10 +47,11 @@ import com.innovate.innovts.UICallback;
 import com.innovate.innovts.checkinternet;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class MapsActivity extends Fragment implements plotmap.mapplot, UICallback, GoogleMap.OnMyLocationChangeListener, OnMapReadyCallback, View.OnClickListener, AdapterView.OnItemSelectedListener {
+public class MapsFragment extends Fragment implements plotmap.mapplot, UICallback, GoogleMap.OnMyLocationChangeListener, OnMapReadyCallback, View.OnClickListener, AdapterView.OnItemSelectedListener {
     public GoogleMap mMap;
     Marker userMarker, childMarker;
     LatLng latLngpick;
@@ -58,7 +60,7 @@ public class MapsActivity extends Fragment implements plotmap.mapplot, UICallbac
     Spinner spinner;
     double lon;
     private String pickadd;
-    String address;
+    String address, oldAddress = "old";
 
     @Override
     public void plotroute(PolylineOptions lineoption) {
@@ -67,13 +69,14 @@ public class MapsActivity extends Fragment implements plotmap.mapplot, UICallbac
             userMarker.remove();
         }
         distance = (float) Distance_address.distFrom(latLngpick.latitude, latLngpick.longitude, latlngdrop.latitude, latlngdrop.longitude);
-       // Toast.makeText(getActivity(), "Distance: " + distance + " m", Toast.LENGTH_SHORT).show();
+        // Toast.makeText(getActivity(), "Distance: " + distance + " m", Toast.LENGTH_SHORT).show();
         addUserMarker(latLngpick, "Current Location", "Current Location");
         addChildMarker(latlngdrop, "bus", address);
         if (lineoption != null) {
             Log.e("maplote", address + "here " + pickadd);
             mMap.addPolyline(lineoption);
         }
+
     }
 
     public void plot() {
@@ -98,21 +101,13 @@ public class MapsActivity extends Fragment implements plotmap.mapplot, UICallbac
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        // Do something after 5s = 5000ms
-
-                        HttpResponse.listener("position", "http://103.254.180.108:8082/api/positions", MapsActivity.this, spinner.getSelectedItemPosition());
-                        handler.postDelayed(this, 20000);
+                        HttpResponse.listener("position", "http://103.254.180.108:8082/api/positions", MapsFragment.this, spinner.getSelectedItemPosition());
+                        handler.postDelayed(this, 10000);
 
                     }
                 }, 10000);
             }
             Log.e("item", spinner.getSelectedItemPosition() + "pos" + spinner.getSelectedItemId());
-       /* latlngdrop = new LatLng(27.681724721752698, 85.52912872284651);
-        if (position > 1) {
-            lat=27.681724721752698;
-            lon=85.52912872284651;
-
-        }*/
         }
     }
 
@@ -125,21 +120,23 @@ public class MapsActivity extends Fragment implements plotmap.mapplot, UICallbac
 
     @Override
     public void update(double lat1, double lon1, String address1) {
-        Log.e("update", "update" + lon1);
+        Log.e("update", "update" + lon1 + "old " + oldAddress + "new" + address1 + oldAddress.equals(address1));
         latlngdrop = new LatLng(lat1, lon1);
         lat = lat1;
         lon = lon1;
-        if (address1 != null) {
-            address = address1;
+        if (!address1.equalsIgnoreCase(oldAddress)) {
+            if (address1 != null) {
+                address = address1;
+                addChildMarker(latlngdrop, "bus", address);
+            } else {
+                addChildMarker(latlngdrop, "bus", "Loading..");
+                flag = 1;
+                address = getaddress(latlngdrop);
 
-            addChildMarker(latlngdrop, "bus", address);
-        } else {
-            addChildMarker(latlngdrop, "bus", "Loading..");
-            flag = 1;
-            address = getaddress(latlngdrop);
 
+            }
+            plot();
         }
-        plot();
     }
 
     @Override
@@ -147,9 +144,16 @@ public class MapsActivity extends Fragment implements plotmap.mapplot, UICallbac
 
     }
 
-
-    public interface calacivity {
-        void mapfrom(double lat, double lng, String type);
+    @Override
+    public void getName(List<String> name) {
+        List<String> uri = new ArrayList<>();
+        sp.setRefreshing(false);
+        if (name != null) {
+            uri = name;
+            getBusNumber(uri);
+        } else {
+            uri.add("No Device Found");
+        }
     }
 
     @Override
@@ -168,31 +172,30 @@ public class MapsActivity extends Fragment implements plotmap.mapplot, UICallbac
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-           /* case R.id.next:
-                save_add("next");
-                // Do Fragment menu item stuff here
-                return true;
-
-            default:
-                break;*/
         }
 
         return false;
     }
 
-    String[] uri = new String[]{"Please Select Bus", "BUS2", "barsha", "saajan", "dipesh", "ajay"};
+
     // String[] uri = new String[]{"Please Select Bus", "2", "3", "5", "7", "8"};
 
-
-    public void getBusNumber() {
+    public void getBusNumber(List<String> uri) {
         spinner.setOnItemSelectedListener(this);
         ArrayAdapter<String> typelist;
-        //latlngdrop = new LatLng()
         typelist = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, uri);
         spinner.setAdapter(typelist);
-
-
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (!checkinternet.displaynetstatus(getActivity(), true)) {
+            HttpResponse.listener("users", "http://103.254.180.108:8082/api/devices", this, 0);
+        }
+    }
+
+    SwipeRefreshLayout sp;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -200,16 +203,16 @@ public class MapsActivity extends Fragment implements plotmap.mapplot, UICallbac
         View rootView = inflater.inflate(R.layout.activity_maps, container, false);
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.google_map);
         spinner = (Spinner) rootView.findViewById(R.id.spinner);
-        Log.e("map", "oncreate");
         mapFragment.getMapAsync(this);
+        sp = (SwipeRefreshLayout) rootView.findViewById(R.id.refresh);
+        sp.setRefreshing(false);
+        sp.setOnClickListener(this);
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-        // checkinternet.displaynetstatus(getActivity(), true);
-        getBusNumber();
+        trySwipeRefreshLayout();
         return rootView;
     }
 
     public String getaddress(final LatLng latLng) {
-        // checkinternet.displaynetstatus(getActivity(), true);
         Thread th = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -249,9 +252,6 @@ public class MapsActivity extends Fragment implements plotmap.mapplot, UICallbac
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
-        //  result = Permission.Utility.checkPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION, 124, "Location permission is necessary");
-        // mMap.setOnMapClickListener(MapsActivity.this);
         mMap.setOnMyLocationChangeListener(this);
         result = Permission.Utility.checkPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION, 124, "Location permission is necessary");
 
@@ -272,8 +272,6 @@ public class MapsActivity extends Fragment implements plotmap.mapplot, UICallbac
                 }
                 return;
             }
-            // other 'case' lines to check for other
-            // permissions this app might request
         }
     }
 
@@ -287,16 +285,8 @@ public class MapsActivity extends Fragment implements plotmap.mapplot, UICallbac
                 .zoomControlsEnabled(true)
                 .zoomGesturesEnabled(true);
         mMap.setPadding(0, dpToPx(70), 0, 0);
-
-        //  mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLngpick, 8f));
-        //  addUserMarker(latLngpick, "here");
-        //  userMarker.showInfoWindow();
     }
 
-    // mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(28.3974557, 84.1299978), 5.5f));
-       /* addUserMarker(new LatLng(28.3974557, 84.1299978),"Loading...");
-        userMarker.setTitle("Nepal");*/
-    //  userMarker.showInfoWindow();
     public int dpToPx(int dp) {
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         int px = Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
@@ -322,6 +312,23 @@ public class MapsActivity extends Fragment implements plotmap.mapplot, UICallbac
     }
 
     float distance;
+    private void trySwipeRefreshLayout() {
+        if (sp != null) {
+            sp.setColorSchemeResources(
+                    R.color.materialred,
+                    R.color.colorPrimary,
+                    R.color.materialyellow);
+        }
+        sp.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                sp.setRefreshing(true);
+                if (!checkinternet.displaynetstatus(getActivity(), true)) {
+                    HttpResponse.listener("users", "http://103.254.180.108:8082/api/devices",MapsFragment.this, 0);
+                }
+            }
+        });
+    }
 
     @Override
     public void onClick(View v) {
@@ -369,6 +376,7 @@ public class MapsActivity extends Fragment implements plotmap.mapplot, UICallbac
     private void addUserMarker(final LatLng loc, String title, String address) {
         Log.e("markr", title);
 
+
         BitmapDrawable bitmapDrawable;
         int height = 80;
         int width = 65;
@@ -391,9 +399,12 @@ public class MapsActivity extends Fragment implements plotmap.mapplot, UICallbac
         userMarker.showInfoWindow();
     }
 
+
+
+
     private void addChildMarker(final LatLng loc, String title, String address) {
         Log.e("markr", title);
-
+        oldAddress = address;
         BitmapDrawable bitmapDrawable;
         int height = 80;
         int width = 65;
@@ -405,23 +416,25 @@ public class MapsActivity extends Fragment implements plotmap.mapplot, UICallbac
         bitmapDrawable = (BitmapDrawable) getResources().getDrawable(R.drawable.bus);
         Bitmap b = bitmapDrawable.getBitmap();
         Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
-
+        oldAddress = address;
         childMarker = mMap.addMarker(new MarkerOptions()
                 .position(loc)
                 .title(address)
                 .icon(BitmapDescriptorFactory.fromBitmap(smallMarker)));
         childMarker.showInfoWindow();
     }
-@Override
-public void onPause(){
-    super.onPause();
 
-}
+    @Override
+    public void onPause() {
+        super.onPause();
+
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
 
-//        handler.removeCallbacks((Runnable) MapsActivity.this);
+//        handler.removeCallbacks((Runnable) MapsFragment.this);
 
     }
 
@@ -429,12 +442,12 @@ public void onPause(){
     public void onMyLocationChange(Location location) {
         //  mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loc, 18f));
         Log.e("map", "locchange");
-        if (userMarker == null) {
+        LatLng loc = new LatLng(location.getLatitude(), location.getLongitude());
+        if (userMarker == null && loc != latLngpick) {
             lat = location.getLatitude();
             lon = location.getLongitude();
             latLngpick = new LatLng(lat, lon);
             Log.e("mylocchange", latLngpick + "");
-            LatLng loc = new LatLng(location.getLatitude(), location.getLongitude());
             pickadd = getaddress(loc);
             addUserMarker(loc, "Current Position", pickadd);
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, 12f));

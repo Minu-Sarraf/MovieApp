@@ -3,11 +3,8 @@ package com.innovate.innovts;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.util.Log;
-
 import com.squareup.okhttp.Authenticator;
 import com.squareup.okhttp.CacheControl;
 import com.squareup.okhttp.Credentials;
@@ -18,15 +15,12 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 import com.squareup.okhttp.ResponseBody;
-
 import org.json.JSONException;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.Proxy;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
-
 import okio.Buffer;
 import okio.BufferedSink;
 import okio.BufferedSource;
