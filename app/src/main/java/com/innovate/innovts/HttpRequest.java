@@ -1,6 +1,7 @@
 package com.innovate.innovts;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
@@ -28,6 +29,8 @@ import okio.ForwardingSource;
 import okio.Okio;
 import okio.Source;
 
+import static android.content.Context.MODE_PRIVATE;
+
 /**
  * Created by User on 3/20/2016.
  */
@@ -43,6 +46,7 @@ public class HttpRequest extends AsyncTask<Void, Long, Void> {
     private String mUrl;
     private RequestBody mRequestBody;
     private Boolean appendAppInfo = false;
+
     public HttpRequest(String url, RequestBody requestBody) {
         Log.e("httpreq","httpreq");
         mContext = MyApplication.getInstance();
@@ -87,21 +91,21 @@ public class HttpRequest extends AsyncTask<Void, Long, Void> {
 
     @Override
     protected Void doInBackground(Void... params) {
+        SharedPreferences sp =mContext.getSharedPreferences("auth",MODE_PRIVATE);
+        final String email= sp.getString("email","");
+        final String password = sp.getString("password","");
         if (appendAppInfo) {
             mUrl = mUrl + getAppInfoUrlSection();
         }
-
-        if (isNetworkAvailable(mContext)) {
-
+        if (isNetworkAvailable(mContext)&& !email.equals("")) {
             OkHttpClient client = new OkHttpClient();
             client.setAuthenticator(new Authenticator() {
                 @Override
                 public Request authenticate(Proxy proxy, Response response) throws IOException {
                     Log.e("http","auth");
-                    String credential = Credentials.basic("maharjan.ajay064@gmail.com","142857");
+                    String credential = Credentials.basic(email,password);
                     return response.request().newBuilder().header("Authorization", credential).build();
                 }
-
                 @Override
                 public Request authenticateProxy(Proxy proxy, Response response) throws IOException {
                     Log.e("http",response+"");

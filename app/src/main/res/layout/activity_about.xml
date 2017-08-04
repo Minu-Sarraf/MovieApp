@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_about"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.innovate.innovts.About">
+    <TextView
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:padding="16dp"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+    <TextView
+        android:layout_below="@id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="InnoVTS is hardware compatable application that tracks vehicles with our tracking device. A team from innovake  developed customizable and compatable application as well as hardware for effective and efficient tracking solutions.
+\nDon't forget to rate us and send us your feedbacks.
+\nContact us at: Innovake.iot@gmail.com"
+        android:textSize="18sp"
+        android:textColor="@color/secondary_text"
+        android:typeface="normal"
+        android:lineSpacingExtra="8sp" />
+
+</RelativeLayout>

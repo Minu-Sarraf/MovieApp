@@ -2,6 +2,7 @@ package com.innovate.innovts;
 
 import android.app.Application;
 import android.content.Context;
+import android.util.Log;
 
 /**
  * Created by User on 6/30/2016.
@@ -26,9 +27,10 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Log.e("myapplication","app");
         mInstance = this;
     }
-    @Override
+   /* @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
       //  MultiDex.install(this);
@@ -40,8 +42,8 @@ public class MyApplication extends Application {
     @Override
     public Context getBaseContext() {
         return super.getBaseContext();
-    }
-    public static synchronized MyApplication getInstance() {
+    }*/
+    public static MyApplication getInstance() {
         return mInstance;
     }
 }

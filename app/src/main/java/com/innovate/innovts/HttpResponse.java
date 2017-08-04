@@ -45,6 +45,9 @@ public class HttpResponse {
                         Log.e("response", e.getCause() + e.getMessage());
                     }
 
+                }else {
+                    if(uIcallback.equals("auth"))
+                    uIcallback.getName(null);
                 }
             }
         });
@@ -72,11 +75,13 @@ public class HttpResponse {
 
     private static List<String> getName1(String result) {
         ArrayList<String> name = new ArrayList<String>();
+
 //        name.clear();
         JSONArray mJsonArray = null;
         try {
             mJsonArray = new JSONArray(result);
         //    JSONObject obj = mJsonArray.getJSONObject(0);
+            name.add("Please Select Device");
             for (int i=0;i<mJsonArray.length();i++){
                 JSONObject obj = mJsonArray.optJSONObject(i);
                 name.add(obj.get("name").toString());
@@ -114,25 +119,11 @@ public class HttpResponse {
                 ArrayList<JsonParser> array1;
 
                 array1 = new GsonBuilder().create().fromJson(result, listType);
-               /* for (JsonParser post : array1) {
-
-                        a2.addAll(post.getLatitude());
-                    }
-                }*/
 
                 lat = array1.get(position).getLatitude();
                 lon = array1.get(position).getLongitude();
                 Log.e("array", "aa" + lat);
 
-                  /*  for ( post : array1) {
-                        for (int i = 0; i < post.getResponse().size(); i++) {
-                            a2.clear();
-                            a2.addAll(post.getResponse());
-                        }
-                    }
-
-
-                }*/
             } catch (Exception e) {
                 Log.e("catch", e.getMessage());
                 // return null;

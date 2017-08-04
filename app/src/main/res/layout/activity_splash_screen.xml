@@ -12,9 +12,7 @@
         android:layout_height="wrap_content"
         android:background="@color/white">
     </android.support.design.widget.AppBarLayout>
-
-    <include layout="@layout/content_main"
-        />
+    <include layout="@layout/content_main"/>
 
 
     <com.rey.material.widget.ProgressView
@@ -30,4 +28,5 @@
         app:pv_progressStyle="@style/Material.Drawable.CircularProgress.Normal"
         app:pv_progressMode="indeterminate"
         android:visibility="gone"/>
+
 </android.support.design.widget.CoordinatorLayout>

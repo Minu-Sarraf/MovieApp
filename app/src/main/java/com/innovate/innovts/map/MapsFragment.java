@@ -2,6 +2,7 @@ package com.innovate.innovts.map;
 
 
 import android.Manifest;
+
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 
@@ -12,7 +13,6 @@ import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -51,7 +51,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class MapsFragment extends Fragment implements plotmap.mapplot, UICallback, GoogleMap.OnMyLocationChangeListener, OnMapReadyCallback, View.OnClickListener, AdapterView.OnItemSelectedListener {
+public class MapsFragment extends Fragment implements plotmap.mapplot,UICallback, GoogleMap.OnMyLocationChangeListener, OnMapReadyCallback, View.OnClickListener, AdapterView.OnItemSelectedListener {
     public GoogleMap mMap;
     Marker userMarker, childMarker;
     LatLng latLngpick;
@@ -70,7 +70,7 @@ public class MapsFragment extends Fragment implements plotmap.mapplot, UICallbac
         }
         distance = (float) Distance_address.distFrom(latLngpick.latitude, latLngpick.longitude, latlngdrop.latitude, latlngdrop.longitude);
         // Toast.makeText(getActivity(), "Distance: " + distance + " m", Toast.LENGTH_SHORT).show();
-        addUserMarker(latLngpick, "Current Location", "Current Location");
+        addUserMarker("Current Location");
         addChildMarker(latlngdrop, "bus", address);
         if (lineoption != null) {
             Log.e("maplote", address + "here " + pickadd);
@@ -108,6 +108,12 @@ public class MapsFragment extends Fragment implements plotmap.mapplot, UICallbac
                 }, 10000);
             }
             Log.e("item", spinner.getSelectedItemPosition() + "pos" + spinner.getSelectedItemId());
+        }else{
+            if (childMarker != null) {
+                childMarker.remove();
+                mMap.clear();
+                addUserMarker(address);
+            }
         }
     }
 
@@ -147,7 +153,10 @@ public class MapsFragment extends Fragment implements plotmap.mapplot, UICallbac
     @Override
     public void getName(List<String> name) {
         List<String> uri = new ArrayList<>();
-        sp.setRefreshing(false);
+      //  sp.setRefreshing(false);
+        if (childMarker != null) {
+            childMarker.remove();
+        }
         if (name != null) {
             uri = name;
             getBusNumber(uri);
@@ -160,7 +169,6 @@ public class MapsFragment extends Fragment implements plotmap.mapplot, UICallbac
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        //   setContentView(R.layout.activity_maps);
     }
 
     @Override
@@ -195,7 +203,7 @@ public class MapsFragment extends Fragment implements plotmap.mapplot, UICallbac
         }
     }
 
-    SwipeRefreshLayout sp;
+    //SwipeRefreshLayout sp;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -204,15 +212,16 @@ public class MapsFragment extends Fragment implements plotmap.mapplot, UICallbac
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.google_map);
         spinner = (Spinner) rootView.findViewById(R.id.spinner);
         mapFragment.getMapAsync(this);
-        sp = (SwipeRefreshLayout) rootView.findViewById(R.id.refresh);
-        sp.setRefreshing(false);
-        sp.setOnClickListener(this);
+      //  sp = (SwipeRefreshLayout) rootView.findViewById(R.id.refresh);
+       // sp.setRefreshing(false);
+       // sp.setOnClickListener(this);
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-        trySwipeRefreshLayout();
+        //trySwipeRefreshLayout();
         return rootView;
     }
 
     public String getaddress(final LatLng latLng) {
+        // checkinternet.displaynetstatus(getActivity(), true);
         Thread th = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -312,7 +321,7 @@ public class MapsFragment extends Fragment implements plotmap.mapplot, UICallbac
     }
 
     float distance;
-    private void trySwipeRefreshLayout() {
+   /* private void trySwipeRefreshLayout() {
         if (sp != null) {
             sp.setColorSchemeResources(
                     R.color.materialred,
@@ -328,7 +337,7 @@ public class MapsFragment extends Fragment implements plotmap.mapplot, UICallbac
                 }
             }
         });
-    }
+    }*/
 
     @Override
     public void onClick(View v) {
@@ -373,8 +382,7 @@ public class MapsFragment extends Fragment implements plotmap.mapplot, UICallbac
         double new_Longitude = (((precision * lat)) / precision);*//*
     }*/
 
-    private void addUserMarker(final LatLng loc, String title, String address) {
-        Log.e("markr", title);
+    private void addUserMarker(String address) {
 
 
         BitmapDrawable bitmapDrawable;
@@ -393,7 +401,7 @@ public class MapsFragment extends Fragment implements plotmap.mapplot, UICallbac
         Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
 
         userMarker = mMap.addMarker(new MarkerOptions()
-                .position(loc)
+                .position(latLngpick)
                 .title(address)
                 .icon(BitmapDescriptorFactory.fromBitmap(smallMarker)));
         userMarker.showInfoWindow();
@@ -449,7 +457,7 @@ public class MapsFragment extends Fragment implements plotmap.mapplot, UICallbac
             latLngpick = new LatLng(lat, lon);
             Log.e("mylocchange", latLngpick + "");
             pickadd = getaddress(loc);
-            addUserMarker(loc, "Current Position", pickadd);
+            addUserMarker(pickadd);
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, 12f));
             userMarker.showInfoWindow();
         }

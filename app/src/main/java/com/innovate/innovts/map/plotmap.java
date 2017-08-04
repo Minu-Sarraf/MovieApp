@@ -1,5 +1,6 @@
 package com.innovate.innovts.map;
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.v4.app.FragmentActivity;
@@ -28,7 +29,7 @@ import java.util.List;
 public class plotmap {
     // static GoogleMap map;
 
-    public static String getDirectionsUrl(LatLng origin, LatLng dest, FragmentActivity activity) {
+    public static String getDirectionsUrl(LatLng origin, LatLng dest, Activity activity) {
         // map = map1;
         // Origin of route
         String str_dest = null;

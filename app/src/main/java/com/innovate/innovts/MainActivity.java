@@ -1,13 +1,21 @@
 package com.innovate.innovts;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputLayout;
 
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -21,11 +29,24 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.plus.Plus;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.innovate.innovts.map.MapsFragment;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Date;
+
+import static com.innovate.innovts.R.styleable.NavigationDrawerDrawable;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
@@ -35,7 +56,10 @@ public class MainActivity extends AppCompatActivity
     private TextView notificounter;
     private GoogleApiClient mGoogleApiClient;
     private Fragment fragment;
-
+     NavigationView navigationView;
+    public DatabaseReference mFirebaseDatabase;
+    TextView email;
+    double version=1.0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,14 +78,42 @@ public class MainActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
+
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        View header = navigationView.getHeaderView(0);
+        email = (TextView) header.findViewById(R.id.email);
+        SharedPreferences sp = getSharedPreferences("auth", MODE_PRIVATE);
+        email.setText(sp.getString("email", ""));
         startlocation();
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addApi(Plus.API)
                 .addScope(Plus.SCOPE_PLUS_LOGIN)
                 .build();
         //  updateuserinfo();
+
     }
 
+    protected void onStart() {
+        super.onStart();
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("version");
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.e("database", String.valueOf(dataSnapshot.getValue(String.class)));
+                version = Double.parseDouble(dataSnapshot.getValue(String.class));
+                checkUpdate();
+              /*  for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+                    //FeedDataModel.FeedsBean feedData = userSnapshot.getValue(FeedDataModel.FeedsBean.class);
+                }*/
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
 
     //private String title;
     private void fragment() {
@@ -80,11 +132,11 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-@Override
-public void onPause(){
-    super.onPause();
-    getSupportFragmentManager().beginTransaction().remove(new MapsFragment());
-}
+    @Override
+    public void onPause() {
+        super.onPause();
+        getSupportFragmentManager().beginTransaction().remove(new MapsFragment());
+    }
 
     private void startlocation() {
         sharedpreferences = this.getSharedPreferences("login", MODE_PRIVATE);
@@ -140,23 +192,26 @@ public void onPause(){
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-          /*else if (id == R.id.logout) {
-                SharedPreferences prefs = getSharedPreferences("userinfo", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = prefs.edit();
-                //  editor.putBoolean("loggedin", false);
-                editor.clear();
-                editor.commit();
-                if (mGoogleApiClient.isConnected()) {
-                    Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
-                    mGoogleApiClient.disconnect();
-                    //  mGoogleApiClient.connect();
-                    //  updateUI(false);
-                }
-                Intent i = new Intent(this, LoginActivity.class);
-                startActivity(i);*/
+        Log.e("idmain", id + "" + R.id.about);
+        if (id == R.id.logout) {
 
-        // LoginBaseActvity.signOutFromGplus(true);
-        // }
+            SharedPreferences sp = getSharedPreferences("auth", MODE_PRIVATE);
+            SharedPreferences.Editor et = sp.edit();
+            et.clear();
+            et.commit();
+            if (mGoogleApiClient.isConnected()) {
+                Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
+                mGoogleApiClient.disconnect();
+                //  mGoogleApiClient.connect();
+                //  updateUI(false);
+            }
+            Intent i = new Intent(this, LoginActivity.class);
+            startActivity(i);
+        } else if (id == R.id.about) {
+
+            Intent i = new Intent(this, About.class);
+            startActivity(i);
+        }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
@@ -186,13 +241,36 @@ public void onPause(){
         fragment();
     }
 
+    MaterialDialog progressdialog;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
+        Log.e("idselect", item.getItemId() + "here");
         switch (item.getItemId()) {
+            case R.id.update:
+                progressdialog = AlertDialogClass.displayMaterialProgressDialog(MainActivity.this, "Checking Update");
+
 
         }
         return false;
     }
-}
+
+    private void checkUpdate() {
+            try {
+                PackageInfo packageInfo = getApplicationContext().getPackageManager()
+                        .getPackageInfo(getApplicationContext().getPackageName(), 0);
+                double currentVersion = packageInfo.versionCode;
+                if (version > currentVersion) {
+                    progressdialog.dismiss();
+                    String intent = ("https://play.google.com/store/apps/details?id=worldlink.com.np.internal.worldink&ah=Yl-jU2jj2WJiDhHwEKM7QbHIHJ0");
+                    AlertUtils.displayDialog(this, "UPDATE", "There is newer version of this application available, click update to upgrade now?", "Update", "Cancel", intent);
+                } else {
+                    progressdialog.dismiss();
+                    AlertUtils.displayDialog(this, "UPDATE INFO", "Already uptodate", "OK", null, null);
+                }
+            } catch (PackageManager.NameNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+

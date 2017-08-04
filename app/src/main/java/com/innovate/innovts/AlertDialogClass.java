@@ -1,10 +1,14 @@
 package com.innovate.innovts;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
+
+import com.afollestad.materialdialogs.MaterialDialog;
+
 /**
  * Created by User on 7/1/2016.
  */
@@ -25,7 +29,7 @@ public class AlertDialogClass {
             dlgAlert.setTitle(title).setCustomTitle(view);
             dlgAlert.setMessage(message);
             if (positivetext != null) {
-                dlgAlert.setCancelable(false);
+                dlgAlert.setCancelable(true);
                 dlgAlert.setPositiveButton(positivetext,
                         new DialogInterface.OnClickListener() {
 
@@ -48,6 +52,12 @@ public class AlertDialogClass {
             }
             dlgAlert.create().show();
         }
+    }
+    public static MaterialDialog displayMaterialProgressDialog(Context mContenxt, String msg) {
+        MaterialDialog mMaterialDialog = new MaterialDialog.Builder(mContenxt).title(msg)
+                .cancelable(false)
+                .progress(false,0).progressIndeterminateStyle(true).show();
+        return mMaterialDialog;
     }
 
   /*  public static void displaySnackBar(Context context, String msg, int snackColor){

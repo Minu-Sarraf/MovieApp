@@ -1,11 +1,9 @@
 <resources>
     <string name="app_name">InnoVTS</string>
-
-    <!-- Strings related to login -->
     <string name="select_bus">Select Bus Number</string>
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password (optional)</string>
-    <string name="action_sign_in">Sign in or register</string>
+    <string name="prompt_email">Email/Username</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in </string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
@@ -14,13 +12,16 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+   <!-- <string name="about">innoVTS is hardware compatable application that tracks vehicles with our tracking device. A team from innovake  developed customizable and compatable application as well as hardware for effective and efficient tracking solutions.
+        Don't forget to rate us and send us your feedbacks.
+        Contact us at: Innovake.iot@gmail.com</string>-->
     <string name="title_activity_maps">Map</string>
-    <string name="title_activity_main">Innovake</string>
+    <string name="title_activity_main">InnoVake</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Update</string>
     <string name="title_activity_login">Sign in</string>
     <string name="title_activity_maps2">Map</string>
 </resources>

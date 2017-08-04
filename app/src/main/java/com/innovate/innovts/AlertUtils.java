@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.provider.Settings;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -28,6 +29,9 @@ public class AlertUtils {
                         public void onClick(DialogInterface dialog, int which) {
                             if ( subject!=null && subject.equalsIgnoreCase("gps")) {
                                 Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                                context.startActivity(intent);
+                            }else if (subject!=null){
+                                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(subject));
                                 context.startActivity(intent);
                             }
                         }
