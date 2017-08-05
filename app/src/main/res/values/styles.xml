@@ -6,13 +6,15 @@
         <item name="android:textColorSecondary">#fff</item>
         <item name="android:icon">@android:color/holo_green_light</item>
     </style>
-    <style name="AppTheme" parent="Theme.AppCompat">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
 
         <item name="colorPrimary">@color/colorPrimary</item>
 
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:colorForeground">@color/cast_expanded_controller_text_color</item>
+        <item name="android:navigationBarColor">@color/white</item>
     </style>
     <style name="AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="Material.Drawable.CircularProgress">

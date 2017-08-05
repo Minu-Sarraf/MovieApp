@@ -62,7 +62,7 @@ public class Awesomesplash extends Activity {
                     startActivity(i);
                    // finish();
                 } else {
-                    Intent i = new Intent(Awesomesplash.this, LoginActivity.class);
+                    Intent i = new Intent(Awesomesplash.this, LoginActivity2.class);
                     startActivity(i);
                     finish();
                 }

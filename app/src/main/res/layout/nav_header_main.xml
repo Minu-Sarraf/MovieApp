@@ -18,12 +18,11 @@
         android:layout_height="match_parent"
         android:layout_marginTop="10dp">
 
-        <de.hdodenhof.circleimageview.CircleImageView
+        <ImageView
             android:id="@+id/userimage"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:padding="16dp"
-            android:scaleType="centerInside"
             android:background="@drawable/drawerlogo"
             android:backgroundTint="#ffffff"
             />

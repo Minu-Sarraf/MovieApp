@@ -19,7 +19,6 @@
          location permissions for the 'MyLocation' functionality. 
     -->
     <application
-        android:name="com.innovate.innovts.MyApplication"
         android:allowBackup="true"
         android:icon="@drawable/logo"
         android:label="@string/app_name"
@@ -53,10 +52,10 @@
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:theme="@style/AppTheme"
-            android:name=".LoginActivity"
+            android:theme="@style/Theme.AppCompat"
+            android:name=".LoginActivity2"
             android:label="@string/title_activity_login" />
-        <activity android:name=".About"
+        <activity android:name=".About" android:parentActivityName=".MainActivity"
             android:label="About"
             android:theme="@style/Theme.AppCompat"></activity>
     </application>

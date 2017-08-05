@@ -10,6 +10,8 @@ public class About extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+       // getSupportActionBar().setHomeButtonEnabled(true);
     }
     @Override
     public void onBackPressed() {

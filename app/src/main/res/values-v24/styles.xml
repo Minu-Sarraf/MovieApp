@@ -20,8 +20,9 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:colorBackground">@color/white</item>
         <item name="android:textColorPrimaryInverse">@color/white</item>
-        <item name="android:colorForeground">@color/white</item>
+        <item name="android:colorForeground">@color/cast_expanded_controller_text_color</item>
         <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:navigationBarColor">@color/white</item>
     </style>
     <style name="Base.TextAppearance.AppCompat.Widget.Button.Borderless.Colored" parent="android:TextAppearance.Material.Widget.Button" tools:override="true" />
     <style name="Base.TextAppearance.AppCompat.Widget.Button.Colored" parent="android:TextAppearance.Material.Widget.Button" tools:override="true" />
