@@ -60,10 +60,12 @@ public class Awesomesplash extends Activity {
                 if (!prefs.getString("email", "").equals("")) {
                     Intent i = new Intent(Awesomesplash.this, MainActivity.class);
                     startActivity(i);
+                    overridePendingTransition(R.anim.abc_slide_in_top, R.anim.abc_slide_out_bottom);
                    // finish();
                 } else {
                     Intent i = new Intent(Awesomesplash.this, LoginActivity2.class);
                     startActivity(i);
+                    overridePendingTransition(R.anim.abc_slide_in_top, R.anim.abc_slide_out_bottom);
                     finish();
                 }
 

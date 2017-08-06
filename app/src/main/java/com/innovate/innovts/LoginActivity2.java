@@ -302,13 +302,12 @@ public class LoginActivity2 extends AppCompatActivity implements LoaderCallbacks
 
         if (!name.isEmpty()) {
             if (name.size() > 1) {
-
-
                 Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show();
                 mEmailView.clearListSelection();
                 mPasswordView.clearComposingText();
                 Intent i = new Intent(LoginActivity2.this, MainActivity.class);
                 startActivity(i);
+                overridePendingTransition(R.anim.abc_slide_in_top, R.anim.abc_slide_out_bottom);
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();

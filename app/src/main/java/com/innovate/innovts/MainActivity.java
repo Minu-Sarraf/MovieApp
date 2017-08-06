@@ -56,10 +56,10 @@ public class MainActivity extends AppCompatActivity
     private TextView notificounter;
     private GoogleApiClient mGoogleApiClient;
     private Fragment fragment;
-     NavigationView navigationView;
+    NavigationView navigationView;
     public DatabaseReference mFirebaseDatabase;
     TextView email;
-    double version=1.0;
+    double version = 1.0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,17 +100,15 @@ public class MainActivity extends AppCompatActivity
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.e("database", String.valueOf(dataSnapshot.getValue(String.class)));
-                version = Double.parseDouble(dataSnapshot.getValue(String.class));
-                checkUpdate();
-              /*  for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
-                    //FeedDataModel.FeedsBean feedData = userSnapshot.getValue(FeedDataModel.FeedsBean.class);
-                }*/
+                Log.e("database","database"+dataSnapshot.getValue());
+               version = Double.parseDouble(String.valueOf(dataSnapshot.getValue()));
+                Log.e("database", "mmmm" + version + "");
+                checkUpdate("dont");
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
+                Log.e("database", databaseError + "");
             }
         });
     }
@@ -135,25 +133,25 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onPause() {
         super.onPause();
+        if (progressdialog!=null && progressdialog.isShowing()) {
+            progressdialog.dismiss();
+        }
         getSupportFragmentManager().beginTransaction().remove(new MapsFragment());
     }
 
     private void startlocation() {
-        sharedpreferences = this.getSharedPreferences("login", MODE_PRIVATE);
+        sharedpreferences = this.getSharedPreferences("auth", MODE_PRIVATE);
         LocationManager lm = (LocationManager) getSystemService(LOCATION_SERVICE);
-        if (sharedpreferences.getBoolean("driver", false)) {
-            if (!lm.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
-                    !lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
-            }
-            AlertUtils.displayDialog(this, "Gps location is not active", "Please enable Location Services and GPS", "OK", "NO", "gps");
 
-            //   Intent i = new Intent(this, BackgroundLocationService.class);
-            // startService(i);
-        } else {
-            //  Intent i = new Intent(this, BackgroundLocationService.class);
-            //  stopService(i);
+        if (!lm.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
+                !lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
         }
+      //  AlertUtils.displayDialog(this, "Gps location is not active", "Please enable Location Services and GPS", "OK", "NO", "gps");
+
+        //   Intent i = new Intent(this, BackgroundLocationService.class);
+        // startService(i);
     }
+
 
     private static final int TIME_INTERVAL = 3000;
     private long mBackPressed;
@@ -178,10 +176,6 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
-        SharedPreferences sharedPreferences = getSharedPreferences("login", MODE_PRIVATE);
-        final boolean usertyp = sharedPreferences.getBoolean("driver", false);
-
-        //  MenuItem m = menu.findItem(R.id.next);
         Toast.makeText(this, "Loading.....", Toast.LENGTH_LONG);
         return super.onCreateOptionsMenu(menu);
     }
@@ -205,12 +199,13 @@ public class MainActivity extends AppCompatActivity
                 //  mGoogleApiClient.connect();
                 //  updateUI(false);
             }
-            Intent i = new Intent(this, LoginActivity.class);
+            Intent i = new Intent(this, LoginActivity2.class);
             startActivity(i);
         } else if (id == R.id.about) {
 
-            Intent i = new Intent(this, About.class);
+            Intent i = new Intent(this,About.class);
             startActivity(i);
+            overridePendingTransition(R.anim.abc_slide_in_top, R.anim.abc_slide_out_bottom);
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -249,28 +244,32 @@ public class MainActivity extends AppCompatActivity
         switch (item.getItemId()) {
             case R.id.update:
                 progressdialog = AlertDialogClass.displayMaterialProgressDialog(MainActivity.this, "Checking Update");
-
-
+                checkUpdate("show");
         }
         return false;
     }
 
-    private void checkUpdate() {
-            try {
-                PackageInfo packageInfo = getApplicationContext().getPackageManager()
-                        .getPackageInfo(getApplicationContext().getPackageName(), 0);
-                double currentVersion = packageInfo.versionCode;
-                if (version > currentVersion) {
+    private void checkUpdate(String show) {
+        try {
+            PackageInfo packageInfo = getApplicationContext().getPackageManager()
+                    .getPackageInfo(getApplicationContext().getPackageName(), 0);
+            double currentVersion = packageInfo.versionCode;
+            if (version > currentVersion) {
+                if(progressdialog!=null) {
                     progressdialog.dismiss();
-                    String intent = ("https://play.google.com/store/apps/details?id=worldlink.com.np.internal.worldink&ah=Yl-jU2jj2WJiDhHwEKM7QbHIHJ0");
-                    AlertUtils.displayDialog(this, "UPDATE", "There is newer version of this application available, click update to upgrade now?", "Update", "Cancel", intent);
-                } else {
-                    progressdialog.dismiss();
-                    AlertUtils.displayDialog(this, "UPDATE INFO", "Already uptodate", "OK", null, null);
                 }
-            } catch (PackageManager.NameNotFoundException e) {
-                e.printStackTrace();
-            }
+                String intent = ("https://play.google.com/store/apps/details?id=worldlink.com.np.internal.worldink&ah=Yl-jU2jj2WJiDhHwEKM7QbHIHJ0");
+                AlertUtils.displayDialog(this, "UPDATE", "There is newer version of this application available, click update to upgrade now?", "Update", "Cancel", intent);
+            } else {
+                if(progressdialog!=null) {
+                    progressdialog.dismiss();
+                }
+                if(show.equals("show")){
+                AlertUtils.displayDialog(this, "UPDATE INFO", "Already uptodate", "OK", null, null);
+            }}
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
         }
     }
+}
 

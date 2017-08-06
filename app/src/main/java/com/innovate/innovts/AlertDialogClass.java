@@ -27,7 +27,7 @@ public class AlertDialogClass {
             View view = inflater.inflate(R.layout.customdialogtoolbar, null);
             // dlgAlert.setIcon(R.drawable.ic_crop_white_18dp);
             dlgAlert.setTitle(title).setCustomTitle(view);
-            dlgAlert.setMessage(message);
+            dlgAlert.setMessage("mmmmm");
             if (positivetext != null) {
                 dlgAlert.setCancelable(true);
                 dlgAlert.setPositiveButton(positivetext,

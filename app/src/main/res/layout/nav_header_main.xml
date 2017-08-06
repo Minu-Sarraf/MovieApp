@@ -1,14 +1,10 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="164dp"
-    android:paddingRight="16dp"
-    android:paddingLeft="16dp"
     android:paddingTop="16dp"
     android:orientation="vertical">
-
     <ImageView
         android:id="@+id/cover"
-
         android:background="@drawable/side_nav_bar"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
@@ -22,10 +18,9 @@
             android:id="@+id/userimage"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:padding="16dp"
+            android:padding="20dp"
             android:background="@drawable/drawerlogo"
-            android:backgroundTint="#ffffff"
-            />
+            android:backgroundTint="#ffffff" />
 
 
        <android.support.v7.widget.AppCompatTextView
@@ -33,7 +28,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-           android:layout_marginBottom="16dp"
             android:paddingBottom="8dp"
             android:paddingLeft="16dp"
             android:text="minbummmmm"

@@ -51,7 +51,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class MapsFragment extends Fragment implements plotmap.mapplot,UICallback, GoogleMap.OnMyLocationChangeListener, OnMapReadyCallback, View.OnClickListener, AdapterView.OnItemSelectedListener {
+public class MapsFragment extends Fragment implements plotmap.mapplot,UICallback,Runnable, GoogleMap.OnMyLocationChangeListener, OnMapReadyCallback, View.OnClickListener, AdapterView.OnItemSelectedListener {
     public GoogleMap mMap;
     Marker userMarker, childMarker;
     LatLng latLngpick;
@@ -97,15 +97,8 @@ public class MapsFragment extends Fragment implements plotmap.mapplot,UICallback
             if (!checkinternet.displaynetstatus(getActivity(), true)) {
                 HttpResponse.listener("position", "http://103.254.180.108:8082/api/positions", this, spinner.getSelectedItemPosition());
 
-                handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        HttpResponse.listener("position", "http://103.254.180.108:8082/api/positions", MapsFragment.this, spinner.getSelectedItemPosition());
-                        handler.postDelayed(this, 10000);
 
-                    }
-                }, 10000);
+                handler.postDelayed(this,10000);
             }
             Log.e("item", spinner.getSelectedItemPosition() + "pos" + spinner.getSelectedItemId());
         }else{
@@ -198,6 +191,7 @@ public class MapsFragment extends Fragment implements plotmap.mapplot,UICallback
     @Override
     public void onResume() {
         super.onResume();
+        handler.postDelayed(this,10000);
         if (!checkinternet.displaynetstatus(getActivity(), true)) {
             HttpResponse.listener("users", "http://103.254.180.108:8082/api/devices", this, 0);
         }
@@ -215,6 +209,7 @@ public class MapsFragment extends Fragment implements plotmap.mapplot,UICallback
       //  sp = (SwipeRefreshLayout) rootView.findViewById(R.id.refresh);
        // sp.setRefreshing(false);
        // sp.setOnClickListener(this);
+        handler = new Handler();
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         //trySwipeRefreshLayout();
         return rootView;
@@ -263,7 +258,6 @@ public class MapsFragment extends Fragment implements plotmap.mapplot,UICallback
         mMap = googleMap;
         mMap.setOnMyLocationChangeListener(this);
         result = Permission.Utility.checkPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION, 124, "Location permission is necessary");
-
         mMap.setMyLocationEnabled(true);
         initializeMap();
     }
@@ -335,7 +329,8 @@ public class MapsFragment extends Fragment implements plotmap.mapplot,UICallback
                 if (!checkinternet.displaynetstatus(getActivity(), true)) {
                     HttpResponse.listener("users", "http://103.254.180.108:8082/api/devices",MapsFragment.this, 0);
                 }
-            }
+            }ps
+
         });
     }*/
 
@@ -435,6 +430,7 @@ public class MapsFragment extends Fragment implements plotmap.mapplot,UICallback
     @Override
     public void onPause() {
         super.onPause();
+        handler.removeCallbacks(this);
 
     }
 
@@ -463,5 +459,12 @@ public class MapsFragment extends Fragment implements plotmap.mapplot,UICallback
         }
         //  mMap.setOnMyLocationChangeListener(null);
         //stop location updates
+    }
+
+    @Override
+    public void run() {
+        HttpResponse.listener("position", "http://103.254.180.108:8082/api/positions", MapsFragment.this, spinner.getSelectedItemPosition());
+        handler.postDelayed(this, 10000);
+
     }
 }

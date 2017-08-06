@@ -33,6 +33,8 @@ public class AlertUtils {
                             }else if (subject!=null){
                                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(subject));
                                 context.startActivity(intent);
+                            }else{
+                                builder.setCancelable(true);
                             }
                         }
                     });

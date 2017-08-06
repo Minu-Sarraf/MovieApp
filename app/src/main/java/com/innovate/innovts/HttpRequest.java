@@ -91,9 +91,9 @@ public class HttpRequest extends AsyncTask<Void, Long, Void> {
 
     @Override
     protected Void doInBackground(Void... params) {
-       // SharedPreferences sp =mContext.getSharedPreferences("auth",MODE_PRIVATE);
-       // final String email= sp.getString("email","");
-       // final String password = sp.getString("password","");
+        SharedPreferences sp =mContext.getSharedPreferences("auth",MODE_PRIVATE);
+        final String email= sp.getString("email","");
+        final String password = sp.getString("password","");
         if (appendAppInfo) {
             mUrl = mUrl + getAppInfoUrlSection();
         }
@@ -102,8 +102,7 @@ public class HttpRequest extends AsyncTask<Void, Long, Void> {
             client.setAuthenticator(new Authenticator() {
                 @Override
                 public Request authenticate(Proxy proxy, Response response) throws IOException {
-                    Log.e("http","auth");
-                    String credential = Credentials.basic("maharjan.ajay064@gmail.com","142857");
+                    String credential = Credentials.basic(email,password);
                     return response.request().newBuilder().header("Authorization", credential).build();
                 }
                 @Override

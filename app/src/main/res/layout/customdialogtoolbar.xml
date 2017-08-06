@@ -19,7 +19,6 @@
         android:gravity="center_horizontal"
         android:paddingLeft="25dp"
         android:text="OOPS! ERROR..."
-
         android:textSize="18sp" />
     <!--<include layout="@layout/content_main"/>-->
 

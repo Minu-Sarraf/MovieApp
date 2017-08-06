@@ -79,11 +79,12 @@ public class checkinternet {
                         public void run() {
                             error=true;
                            if(a){
+                               AlertUtils.displayDialog(((Activity) c), "OOPS! ERROR", "Poor Internet Connection", null, null,"net");
                            // AlertDialogClass.displaySnackBar(c, "Cannot connect to the internet! Please Try Again.", R.color.materialred);
-                            AlertDialogClass.display_dialog(((Activity)c), "OOPS! ERROR", String.valueOf(Html.fromHtml("Cannot connect to the internet! <br>Please Try Again.")), null, null);
+                          //  AlertDialogClass.display_dialog(((Activity)c), "OOPS! ERROR", String.valueOf(Html.fromHtml("Cannot connect to the internet! <br>Please Try Again.")), null, null);
                         }}
                     });
-                }else if(isNetWorkAvailableNow(c)&& !isOnline()){
+                }/*else if(isNetWorkAvailableNow(c)&& !isOnline()){
                     ((Activity)c).runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -93,7 +94,7 @@ public class checkinternet {
                             }
                         }
                     });
-                }
+                }*/
             }
         });
         th.start();
