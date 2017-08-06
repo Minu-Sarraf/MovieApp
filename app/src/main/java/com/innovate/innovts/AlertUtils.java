@@ -18,7 +18,6 @@ public class AlertUtils {
 
     public static void displayDialog(final Context context, String title, String msg, String positiveText, String negativeText, final String subject) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.MyAlertDialogStyle)
-                .setCancelable(false)
                 .setTitle(title)
                 .setMessage(msg);
         if (positiveText != null) {
