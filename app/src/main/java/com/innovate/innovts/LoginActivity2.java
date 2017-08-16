@@ -298,8 +298,6 @@ public class LoginActivity2 extends AppCompatActivity implements LoaderCallbacks
     @Override
     public void getName(List<String> name) {
         showProgress(false);
-        Log.e("login","bbbbbbbbbbb"+name);
-
         if (!name.isEmpty()) {
             if (name.size() > 1) {
                 Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show();
@@ -309,7 +307,10 @@ public class LoginActivity2 extends AppCompatActivity implements LoaderCallbacks
                 startActivity(i);
                 overridePendingTransition(R.anim.abc_slide_in_top, R.anim.abc_slide_out_bottom);
             } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
+                SharedPreferences sp = getSharedPreferences("auth", MODE_PRIVATE);
+                SharedPreferences.Editor et = sp.edit();
+                et.clear();
+                mPasswordView.setError("Something went Wwrong. Try again");
                 mPasswordView.requestFocus();
             }
 

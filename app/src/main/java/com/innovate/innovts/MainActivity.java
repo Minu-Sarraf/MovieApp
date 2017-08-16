@@ -258,7 +258,7 @@ public class MainActivity extends AppCompatActivity
                 if(progressdialog!=null) {
                     progressdialog.dismiss();
                 }
-                String intent = ("https://play.google.com/store/apps/details?id=worldlink.com.np.internal.worldink&ah=Yl-jU2jj2WJiDhHwEKM7QbHIHJ0");
+                String intent = ("https://play.google.com/store/apps/details?id=");
                 AlertUtils.displayDialog(this, "UPDATE", "There is newer version of this application available, click update to upgrade now?", "Update", "Cancel", intent);
             } else {
                 if(progressdialog!=null) {

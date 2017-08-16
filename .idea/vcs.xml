@@ -2,5 +2,7 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
+    <mapping directory="D:\Project\InnoVTS\Innovake" vcs="Git" />
+    <mapping directory="D:\Project\InnoVTS\innoVate" vcs="Git" />
   </component>
 </project>
