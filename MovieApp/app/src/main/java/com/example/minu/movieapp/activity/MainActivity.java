@@ -1,36 +1,24 @@
 package com.example.minu.movieapp.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.minu.movieapp.R;
 import com.example.minu.movieapp.adapter.MoviesAdapter;
 import com.example.minu.movieapp.adapter.TabPagerAdapter;
 import com.example.minu.movieapp.model.MoviePopular;
-import com.example.minu.movieapp.model.MoviesResponse;
-import com.example.minu.movieapp.rest.ApiInterface;
-import com.example.minu.movieapp.rest.ApiList;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 //use shared element transition
 
@@ -38,10 +26,7 @@ public class MainActivity extends AppCompatActivity implements MoviesAdapter.Ada
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private final static String API_KEY = "97282286fc521068ca0ba0d1463d4062";
-    RecyclerView mRecyclerView;
     public static final String TMDB_IMAGE_PATH = "http://image.tmdb.org/t/p/w500";
-    private MoviesAdapter mAdapter;
-    public List<MoviePopular> movies;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,10 +84,11 @@ public class MainActivity extends AppCompatActivity implements MoviesAdapter.Ada
     }
 
     @Override
-    public void onMethodCallback(int position) {
+    public void onMethodCallback(int position, List<MoviePopular> mMoviePopularList) {
+
         Intent i = new Intent(this, DetailActivity.class);
         i.putExtra("position", position);
-        i.putParcelableArrayListExtra("popular", new ArrayList<>(movies));
+        i.putParcelableArrayListExtra("popular", new ArrayList<>(mMoviePopularList));
         startActivity(i);
     }
 }

@@ -34,7 +34,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
     public static final String TMDB_IMAGE_PATH = "http://image.tmdb.org/t/p/w500";
     public Context mContext;
     public MoviesAdapter.AdapterCallback mAdapterCallback;
-    public List<MovieNowPlaying.ResultsBean> result;
+
 
     public MoviesAdapter(Context context) {
 
@@ -60,7 +60,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
 
     @Override
     public void onBindViewHolder(final MovieViewHolder holder, int position) {
-        Log.e("pager",ViewPager.generateViewId()+"");
+        Log.e("pager", ViewPager.generateViewId() + "");
         final MoviePopular moviePopular = mMoviePopularList.get(position);
         Picasso.with(mContext)
                 .load(TMDB_IMAGE_PATH + moviePopular.getPosterPath())
@@ -84,7 +84,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
 
 
     public static interface AdapterCallback {
-        void onMethodCallback(int position);
+        void onMethodCallback(int position, List<MoviePopular> mMoviePopularList);
     }
 
     @Override
@@ -117,10 +117,10 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
         @Override
         public void onClick(View view) {
             if (view.getId() == (R.id.imageView)) {
-
+                Log.e("position", getAdapterPosition() + "");
                 try {
                     if (mAdapterCallback != null) {
-                        mAdapterCallback.onMethodCallback(getAdapterPosition());
+                        mAdapterCallback.onMethodCallback(getAdapterPosition(),mMoviePopularList);
                     }
                 } catch (ClassCastException exception) {
                     // do something

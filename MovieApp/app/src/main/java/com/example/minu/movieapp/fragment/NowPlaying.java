@@ -36,7 +36,7 @@ public class NowPlaying extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.top_rated_fragment, container, false);
+        View view = inflater.inflate(R.layout.popular_fragment, container, false);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         mAdapter = new MoviesAdapter(getActivity());
