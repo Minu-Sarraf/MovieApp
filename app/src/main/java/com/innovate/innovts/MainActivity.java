@@ -70,7 +70,6 @@ public class MainActivity extends AppCompatActivity
         fragment = getSupportFragmentManager().findFragmentById(R.id.middlelayout);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         fragment();
         //  getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -35,7 +35,7 @@ public class Awesomesplash extends Activity {
         TextView name = (TextView) findViewById(R.id.name);
         TextView version = (TextView) findViewById(R.id.version);
         pg = (ProgressView) findViewById(R.id.splash);
-        tv.setText("innoVake");
+        tv.setText("innoVTS");
         SharedPreferences sp =getSharedPreferences("auth",MODE_PRIVATE);
         Log.e("splash",sp.getString("email",""));
         name.setText(sp.getString("email",""));

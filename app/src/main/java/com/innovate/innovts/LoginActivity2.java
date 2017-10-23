@@ -90,7 +90,6 @@ public class LoginActivity2 extends AppCompatActivity implements LoaderCallbacks
                 attemptLogin();
             }
         });
-
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
     }
@@ -136,8 +135,6 @@ public class LoginActivity2 extends AppCompatActivity implements LoaderCallbacks
             }
         }
     }
-
-
     /**
      * Attempts to sign in or register the account specified by the login form.
      * If there are form errors (invalid email, missing fields, etc.), the
@@ -150,7 +147,6 @@ public class LoginActivity2 extends AppCompatActivity implements LoaderCallbacks
         // Reset errors.
         mEmailView.setError(null);
         mPasswordView.setError(null);
-
         // Store values at the time of the login attempt.
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
@@ -180,7 +176,13 @@ public class LoginActivity2 extends AppCompatActivity implements LoaderCallbacks
             // form field with an error.
             //  AlertDialogClass.display_dialog(this, "OOPS! ERROR", "Authentication failed", null, null);
             focusView.requestFocus();
-
+            SharedPreferences sp = getSharedPreferences("auth", MODE_PRIVATE);
+            SharedPreferences.Editor et = sp.edit();
+            et.clear();
+            et.putString("email","");
+            et.putString("password","");
+            et.commit();
+                Log.e("login","clear");
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
@@ -254,8 +256,6 @@ public class LoginActivity2 extends AppCompatActivity implements LoaderCallbacks
                         " = ?", new String[]{ContactsContract.CommonDataKinds.Email
                 .CONTENT_ITEM_TYPE},
 
-                // Show primary email addresses first. Note that there won't be
-                // a primary email address if the user hasn't specified one.
                 ContactsContract.Contacts.Data.IS_PRIMARY + " DESC");
     }
 
@@ -310,6 +310,9 @@ public class LoginActivity2 extends AppCompatActivity implements LoaderCallbacks
                 SharedPreferences sp = getSharedPreferences("auth", MODE_PRIVATE);
                 SharedPreferences.Editor et = sp.edit();
                 et.clear();
+                et.putString("email","");
+                et.putString("password", "");
+                et.commit();
                 mPasswordView.setError("Something went Wwrong. Try again");
                 mPasswordView.requestFocus();
             }
@@ -318,6 +321,9 @@ public class LoginActivity2 extends AppCompatActivity implements LoaderCallbacks
             SharedPreferences sp = getSharedPreferences("auth", MODE_PRIVATE);
             SharedPreferences.Editor et = sp.edit();
             et.clear();
+            et.putString("email","");
+            et.putString("password", "");
+            et.commit();
             AlertDialogClass.display_dialog(this, "OOPS! ERROR", "Authentication failed", null, null);
         }
 
