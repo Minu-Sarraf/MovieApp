@@ -67,8 +67,6 @@ public class MainActivity extends AppCompatActivity implements MoviesAdapter.Ada
                                                        }
 
                                                    });
-
-        //  mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         if (API_KEY.isEmpty()) {
             Toast.makeText(getApplicationContext(), "Please obtain your API KEY first from themoviedb.org", Toast.LENGTH_LONG).show();
             return;

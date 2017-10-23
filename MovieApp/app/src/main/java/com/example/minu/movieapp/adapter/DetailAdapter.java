@@ -48,7 +48,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.MovieViewH
         CreditModel.CastBean cast = mCastList.get(position);
         // This is how we use Picasso to load images from the internet.
         Picasso.with(mContext)
-                .load(TMDB_IMAGE_PATH+ cast.getProfile_path())
+                .load(TMDB_IMAGE_PATH+ cast.getProfile_path()).placeholder(R.drawable.qfx)
                 .into(holder.imageView);
         holder.imageView.setOnClickListener(this);
         holder.name.setText(cast.getName());

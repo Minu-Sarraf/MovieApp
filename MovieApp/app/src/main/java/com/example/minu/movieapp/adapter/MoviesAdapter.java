@@ -63,7 +63,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
         Log.e("pager", ViewPager.generateViewId() + "");
         final MoviePopular moviePopular = mMoviePopularList.get(position);
         Picasso.with(mContext)
-                .load(TMDB_IMAGE_PATH + moviePopular.getPosterPath())
+                .load(TMDB_IMAGE_PATH + moviePopular.getPosterPath()).placeholder(R.drawable.qfx)
                 .into(holder.imageView, new com.squareup.picasso.Callback() {
                             @Override
                             public void onSuccess() {
@@ -103,7 +103,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
         public ImageView imageView;
         public TextView name, date;
 
-        //        protected TopratedFragment mAdapterCallback;
+
         public MovieViewHolder(View itemView) {
             super(itemView);
             imageView = (ImageView) itemView.findViewById(R.id.imageView);
@@ -120,7 +120,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
                 Log.e("position", getAdapterPosition() + "");
                 try {
                     if (mAdapterCallback != null) {
-                        mAdapterCallback.onMethodCallback(getAdapterPosition(),mMoviePopularList);
+                        mAdapterCallback.onMethodCallback(getAdapterPosition(), mMoviePopularList);
                     }
                 } catch (ClassCastException exception) {
                     // do something

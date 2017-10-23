@@ -39,14 +39,15 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
     RatingBar ratingBar;
     Button play;
     MoviePopular movie;
-   String key = "";
+    String key = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         mRecyclerView = (RecyclerView) findViewById(R.id.gridView);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-       getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         mAdapter = new DetailAdapter(this);
         mRecyclerView.setAdapter(mAdapter);
@@ -62,10 +63,11 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         setData();
 
     }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-       //overridePendingTransition( R.anim.abc_slide_out_bottom,R.anim.abc_slide_in_top);
+        //overridePendingTransition( R.anim.abc_slide_out_bottom,R.anim.abc_slide_in_top);
     }
 
     private void setData() {
@@ -110,33 +112,31 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         });
 
 
-    Call<VideoModel> call1 = apiService.getVideos(movie.getId(), ApiList.API_KEY);
+        Call<VideoModel> call1 = apiService.getVideos(movie.getId(), ApiList.API_KEY);
 
-    call1.enqueue(new Callback<VideoModel>() {
-        @Override
-        public void onResponse(Call<VideoModel> call1, Response<VideoModel> response) {
-            Log.e("response", response.body().getResults().get(0).getKey() + "");
+        call1.enqueue(new Callback<VideoModel>() {
+            @Override
+            public void onResponse(Call<VideoModel> call1, Response<VideoModel> response) {
+                Log.e("response", response.body().getResults().get(0).getKey() + "");
 
-            List<VideoModel.ResultsBean> credit = new ArrayList<VideoModel.ResultsBean>();
-            credit = response.body().getResults();
-            Log.e("movie",credit.get(0).getKey());
-            key = credit.get(0).getKey();
-          //  mAdapter.setmCastList(credit);
-            //   mAdapter.setCallback(DetailActivity.this);
-        }
+                List<VideoModel.ResultsBean> credit = new ArrayList<VideoModel.ResultsBean>();
+                credit = response.body().getResults();
+                Log.e("movie", credit.get(0).getKey());
+                key = credit.get(0).getKey();
+            }
 
-        @Override
-        public void onFailure(Call<VideoModel> call, Throwable t) {
-        }
-    });
+            @Override
+            public void onFailure(Call<VideoModel> call, Throwable t) {
+            }
+        });
 
-}
+    }
 
     @Override
     public void onClick(View view) {
-        if(view.getId() == R.id.play){
-            Log.e("movie",key);
-            Utility.watchYoutubeVideo(key,this);
+        if (view.getId() == R.id.play) {
+            Log.e("movie", key);
+            Utility.watchYoutubeVideo(key, this);
         }
     }
 }
