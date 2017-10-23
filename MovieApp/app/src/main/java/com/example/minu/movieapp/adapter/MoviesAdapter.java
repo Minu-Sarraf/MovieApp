@@ -56,8 +56,6 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
         return viewHolder;
     }
 
-    //int position1;
-
     @Override
     public void onBindViewHolder(final MovieViewHolder holder, int position) {
         Log.e("pager", ViewPager.generateViewId() + "");

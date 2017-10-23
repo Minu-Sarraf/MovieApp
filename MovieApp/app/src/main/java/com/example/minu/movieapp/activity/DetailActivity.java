@@ -84,11 +84,11 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         Log.e("popular", movie.getId() + "  rating   " + movie.getVoteAverage());
         txDetail.setText(detail.get(position).getOverview());
         Picasso.with(this)
-                .load(ApiList.TMDB_IMAGE_PATH + movie.getPosterPath())
+                .load(ApiList.TMDB_IMAGE_PATH + movie.getPosterPath()).fit()
                 .into(image);
 
         Picasso.with(this)
-                .load(ApiList.TMDB_IMAGE_PATH + movie.getBackdropPath())
+                .load(ApiList.TMDB_IMAGE_PATH + movie.getBackdropPath()).fit()
                 .into(icon);
         txDate.setText(movie.getReleaseDate());
         txname.setText(movie.getOriginalTitle());
