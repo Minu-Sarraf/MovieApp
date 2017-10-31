@@ -8,7 +8,6 @@ import com.example.minu.movieapp.fragment.NowPlaying;
 import com.example.minu.movieapp.fragment.Popular;
 import com.example.minu.movieapp.fragment.TopratedFragment;
 import com.example.minu.movieapp.fragment.Upcoming;
-import com.example.minu.movieapp.model.TopRated;
 
 /**
  * Created by minu on 10/22/2017.
@@ -17,7 +16,6 @@ import com.example.minu.movieapp.model.TopRated;
 public class TabPagerAdapter extends FragmentPagerAdapter {
 
     int tabCount;
-
 
     public TabPagerAdapter(FragmentManager fragmentManager, int tabCount) {
         super(fragmentManager);
@@ -29,18 +27,19 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
 
         switch (position) {
             case 0:
-                Popular tab1 = new Popular();
+                Popular tab1 = new Popular("popular");
+
                 return tab1;
             case 1:
-                Upcoming tab2 = new Upcoming();
+                Popular tab2 = new Popular("upcoming");
                 return tab2;
             case 2:
-                TopratedFragment tab3 = new TopratedFragment();
-
-                return tab3;
-            case 3:
-                NowPlaying tab4 = new NowPlaying();
+                Popular tab4 = new Popular("top_rated");
                 return tab4;
+            case 3:
+                Popular tab3 = new Popular("Now playing");
+                return tab3;
+
             default:
                 return null;
         }

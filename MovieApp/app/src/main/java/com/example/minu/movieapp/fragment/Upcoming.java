@@ -41,7 +41,7 @@ public class Upcoming extends Fragment {
         mRecyclerView.setAdapter(mAdapter);
         ApiInterface apiService = ApiList.getClient().create(ApiInterface.class);
 
-        Call<MoviesResponse> call = apiService.getUpcomingMovies(ApiList.API_KEY);
+        Call<MoviesResponse> call = apiService.getNowPlayingMovies("upcoming",ApiList.API_KEY);
         call.enqueue(new Callback<MoviesResponse>() {
             @Override
             public void onResponse(Call<MoviesResponse> call, Response<MoviesResponse> response) {

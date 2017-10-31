@@ -52,7 +52,7 @@ public class TopratedFragment extends Fragment {
         //List<MoviePopular> movies = ((MainActivity)getActivity()).movies;
 
 
-        Call<MoviesResponse> call = apiService.getTopRatedMovies(ApiList.API_KEY);
+        Call<MoviesResponse> call = apiService.getNowPlayingMovies("top_rated",ApiList.API_KEY);
         call.enqueue(new Callback<MoviesResponse>() {
             @Override
             public void onResponse(Call<MoviesResponse> call, Response<MoviesResponse> response) {

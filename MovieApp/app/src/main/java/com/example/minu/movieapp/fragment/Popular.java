@@ -30,6 +30,11 @@ public class Popular extends Fragment {
     List<MoviePopular> movies;
     private RecyclerView mRecyclerView;
     MoviesAdapter mAdapter;
+    String cat;
+
+     public Popular(String cat) {
+        this.cat = cat;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,8 +47,7 @@ public class Popular extends Fragment {
         ApiInterface apiService = ApiList.getClient().create(ApiInterface.class);
         //List<MoviePopular> movies = ((MainActivity)getActivity()).movies;
 
-
-        Call<MoviesResponse> call = apiService.getPopularMovies(ApiList.API_KEY);
+        Call<MoviesResponse> call = apiService.getNowPlayingMovies(cat,ApiList.API_KEY);
         call.enqueue(new Callback<MoviesResponse>() {
             @Override
             public void onResponse(Call<MoviesResponse> call, Response<MoviesResponse> response) {

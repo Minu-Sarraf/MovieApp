@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.widget.Toast;
 
+import com.example.minu.movieapp.DataSource1;
 import com.example.minu.movieapp.R;
 import com.example.minu.movieapp.adapter.MoviesAdapter;
 import com.example.minu.movieapp.adapter.TabPagerAdapter;
@@ -20,10 +21,23 @@ import com.example.minu.movieapp.model.MoviePopular;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.ButterKnife;
+
 //use shared element transition
 
 public class MainActivity extends AppCompatActivity implements MoviesAdapter.AdapterCallback {
 
+
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
+    @BindView(R.id.tab_layout)
+    TabLayout tabLayout;
+
+    @BindView(R.id.pager)
+    ViewPager viewPager;
+
+    PagerAdapter adapter;
     private static final String TAG = MainActivity.class.getSimpleName();
     private final static String API_KEY = "97282286fc521068ca0ba0d1463d4062";
     public static final String TMDB_IMAGE_PATH = "http://image.tmdb.org/t/p/w500";
@@ -32,17 +46,14 @@ public class MainActivity extends AppCompatActivity implements MoviesAdapter.Ada
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tablayout);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        TabLayout tabLayout =
-                (TabLayout) findViewById(R.id.tab_layout);
+       // setSupportActionBar(toolbar);
+        ButterKnife.bind(this);
         tabLayout.addTab(tabLayout.newTab().setText("Popular"));
         tabLayout.addTab(tabLayout.newTab().setText("Upcoming"));
         tabLayout.addTab(tabLayout.newTab().setText("Top Rated"));
         tabLayout.addTab(tabLayout.newTab().setText("Now playing"));
-        final ViewPager viewPager =
-                (ViewPager) findViewById(R.id.pager);
-        final PagerAdapter adapter = new TabPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+
+         adapter = new TabPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
         Log.i("Popular Fragment", String.valueOf(adapter.getCount()));
         viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(0);
@@ -54,6 +65,8 @@ public class MainActivity extends AppCompatActivity implements MoviesAdapter.Ada
                                                        @Override
                                                        public void onTabSelected(TabLayout.Tab tab) {
                                                            viewPager.setCurrentItem(tab.getPosition());
+
+
                                                        }
 
                                                        @Override
@@ -73,6 +86,13 @@ public class MainActivity extends AppCompatActivity implements MoviesAdapter.Ada
         }
 
 
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+      //  unbinder.unbind();
     }
 
 
