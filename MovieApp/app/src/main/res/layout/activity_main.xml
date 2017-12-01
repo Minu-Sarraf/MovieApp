@@ -20,7 +20,14 @@
              />
 
     </android.support.design.widget.AppBarLayout>-->
-
+<!--<com.rey.material.widget.ProgressView
+    android:layout_marginTop="400dp"
+    android:layout_width="30dp"
+    android:padding="80dp"
+    android:layout_height="40dp"
+    android:id="@+id/progressbar"
+    android:foregroundGravity="center_horizontal"
+    android:visibility="gone"/>-->
 <android.support.v7.widget.RecyclerView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"

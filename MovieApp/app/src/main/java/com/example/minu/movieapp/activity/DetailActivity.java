@@ -27,56 +27,40 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class DetailActivity extends AppCompatActivity implements View.OnClickListener {
-
+    private RecyclerView mRecyclerView;
     private DetailAdapter mAdapter;
-
-    @BindView(R.id.imageView)
-    ImageView image;
-
-    @BindView(R.id.pp)ImageView icon;
-
-    @BindView(R.id.name)
-    TextView txname;
-
-    @BindView(R.id.reviewDesc)
-    TextView txDetail;
-
-    @BindView(R.id.ratingBar)
+    ImageView image, icon;
+    TextView txname, txDetail, txDate, reviewTitle;
     RatingBar ratingBar;
-
-    @BindView(R.id.date)
-    TextView txDate;
-
-    @BindView(R.id.reviewTitle)
-    TextView reviewTitle;
-
-    @BindView(R.id.play)
     Button play;
-
-
     MoviePopular movie;
     String key = "";
-    @BindView(R.id.gridView)
-    private RecyclerView mRecyclerView;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-      //  mRecyclerView = (RecyclerView) findViewById(R.id.gridView);
+        mRecyclerView = (RecyclerView) findViewById(R.id.gridView);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
+       getSupportActionBar().setHomeButtonEnabled(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         mAdapter = new DetailAdapter(this);
         mRecyclerView.setAdapter(mAdapter);
-
+        play = (Button) findViewById(R.id.play);
         play.setOnClickListener(this);
+        txname = (TextView) findViewById(R.id.name);
+        txDetail = (TextView) findViewById(R.id.reviewDesc);
+        ratingBar = (RatingBar) findViewById(R.id.ratingBar);
+        txDate = (TextView) findViewById(R.id.date);
+        reviewTitle = (TextView) findViewById(R.id.reviewTitle);
+        image = (ImageView) findViewById(R.id.imageView);
+        icon = (ImageView) findViewById(R.id.pp);
         setData();
 
     }
@@ -101,11 +85,11 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         Log.e("popular", movie.getId() + "  rating   " + movie.getVoteAverage());
         txDetail.setText(detail.get(position).getOverview());
         Picasso.with(this)
-                .load(ApiList.TMDB_IMAGE_PATH + movie.getPosterPath()).fit()
+                .load(ApiList.TMDB_IMAGE_PATH + movie.getPosterPath())
                 .into(image);
 
         Picasso.with(this)
-                .load(ApiList.TMDB_IMAGE_PATH + movie.getBackdropPath()).fit()
+                .load(ApiList.TMDB_IMAGE_PATH + movie.getBackdropPath())
                 .into(icon);
         txDate.setText(movie.getReleaseDate());
         txname.setText(movie.getOriginalTitle());

@@ -28,14 +28,14 @@ import butterknife.ButterKnife;
 public class MainActivity extends AppCompatActivity implements MoviesAdapter.AdapterCallback {
 
 
-    @BindView(R.id.toolbar)
+   /* @BindView(R.id.toolbar)
     Toolbar toolbar;
 
     @BindView(R.id.tab_layout)
     TabLayout tabLayout;
 
     @BindView(R.id.pager)
-    ViewPager viewPager;
+    ViewPager viewPager;*/
 
     PagerAdapter adapter;
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -46,14 +46,17 @@ public class MainActivity extends AppCompatActivity implements MoviesAdapter.Ada
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tablayout);
-       // setSupportActionBar(toolbar);
-        ButterKnife.bind(this);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        TabLayout tabLayout =
+                (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText("Popular"));
         tabLayout.addTab(tabLayout.newTab().setText("Upcoming"));
         tabLayout.addTab(tabLayout.newTab().setText("Top Rated"));
         tabLayout.addTab(tabLayout.newTab().setText("Now playing"));
-
-         adapter = new TabPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+        final ViewPager viewPager =
+                (ViewPager) findViewById(R.id.pager);
+        final PagerAdapter adapter = new TabPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
         Log.i("Popular Fragment", String.valueOf(adapter.getCount()));
         viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(0);
