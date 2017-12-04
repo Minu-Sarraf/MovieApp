@@ -19,9 +19,6 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * Created by leapfrog on 11/30/17.
- */
 
 class FoodzActivity extends AppCompatActivity implements FoodzView {
     @Inject
