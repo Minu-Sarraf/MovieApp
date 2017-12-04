@@ -6,7 +6,7 @@ import dagger.Component;
 
 
 @Singleton
-@Component(modules = {AppModule.class,PresenterModule.class})
+@Component(modules = {AppModule.class,PresenterModule.class,NetworkModule.class})
 public interface AppComponent {
     void inject(FoodzActivity target);
     void inject(FoodzPresenterImpl target);

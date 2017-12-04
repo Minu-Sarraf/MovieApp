@@ -9,10 +9,9 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
-/**
- * Created by minu on 10/5/2017.
- */
 public interface ApiInterface {
+    @GET("movie/popular")
+    Call<MoviesResponse>getPopularMovies(@Query("api_key") String cb);
 
     @GET("movie/{category}")
     Call<MoviesResponse>getNowPlayingMovies(@Path("category") String category,@Query("api_key") String cb);

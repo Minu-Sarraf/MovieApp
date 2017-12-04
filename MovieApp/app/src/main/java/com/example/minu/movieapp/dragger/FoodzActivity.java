@@ -20,7 +20,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-class FoodzActivity extends AppCompatActivity implements FoodzView {
+public class FoodzActivity extends AppCompatActivity implements FoodzView {
     @Inject
     FoodzPresenter presenter;
 
@@ -29,17 +29,17 @@ class FoodzActivity extends AppCompatActivity implements FoodzView {
 
 
    //// @BindView(R.id.popular_fragment)
-    ProgressBar progressBar;
+   // ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.popular_fragment);
 
         ((DeezFoodApplication) getApplication()).getAppComponent().inject(this);
 
         ButterKnife.bind(this);
-
+        foodzRecyclerView = findViewById(R.id.recyclerView);
         foodzRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         presenter.setView(this);
@@ -52,19 +52,22 @@ class FoodzActivity extends AppCompatActivity implements FoodzView {
 
     @Override
     public void showLoading() {
-        progressBar.setVisibility(View.VISIBLE);
+       // progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideLoading() {
-        progressBar.setVisibility(View.GONE);
+     //   progressBar.setVisibility(View.GONE);
     }
+    MoviesAdapter mAdapter;
 
     @Override
-    public void showFoodz(List<MoviePopular> foodzItemList) {
-        foodzRecyclerView.setAdapter(new MoviesAdapter(this));
-      //  foodzRecyclerView.setMovieList(movies);
-       // mAdapter.setCallback((MoviesAdapter.AdapterCallback) getActivity());
+    public void showFoodz(List<MoviePopular>movies) {
+        mAdapter = new MoviesAdapter(this);
+
+        foodzRecyclerView.setAdapter(mAdapter);
+        mAdapter.setMovieList(movies);
+//        mAdapter.setCallback((MoviesAdapter.AdapterCallback) this);
         foodzRecyclerView.getAdapter().notifyDataSetChanged();
     }
 
