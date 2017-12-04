@@ -30,6 +30,7 @@ public class MoviesResponse {
     public List<MoviePopular> getResults() {
         return results;
     }
+
     public void setResults(List<MoviePopular> results) {
         this.results = results;
     }

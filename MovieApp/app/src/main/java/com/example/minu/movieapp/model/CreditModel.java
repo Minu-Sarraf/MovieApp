@@ -8,7 +8,6 @@ import java.util.List;
 
 public class CreditModel {
 
-
     private int id;
     private List<CastBean> cast;
     private List<CrewBean> crew;

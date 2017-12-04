@@ -1,9 +1,6 @@
 package com.example.minu.movieapp.adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,10 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.minu.movieapp.R;
-import com.example.minu.movieapp.activity.DetailActivity;
-import com.example.minu.movieapp.fragment.Popular;
-import com.example.minu.movieapp.fragment.TopratedFragment;
-import com.example.minu.movieapp.model.MovieNowPlaying;
 import com.example.minu.movieapp.model.MoviePopular;
 import com.squareup.picasso.Picasso;
 
