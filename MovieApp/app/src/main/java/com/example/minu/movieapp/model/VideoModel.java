@@ -7,8 +7,6 @@ import java.util.List;
  */
 
 public class VideoModel {
-
-
     /**
      * id : 1999
      * results : [{"id":"533ec65ac3a3685448000ac4","iso_639_1":"en","iso_3166_1":"US","key":"vbgETu4NH_Y","name":"In The Bedroom (2001)","site":"YouTube","size":360,"type":"Trailer"}]
