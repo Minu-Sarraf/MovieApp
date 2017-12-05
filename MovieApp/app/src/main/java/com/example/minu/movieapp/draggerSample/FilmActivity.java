@@ -36,6 +36,8 @@ public class FilmActivity extends AppCompatActivity implements FilmView {
         ((FilmApplication) getApplication()).getAppComponent().inject(this);
 
         ButterKnife.bind(this);
+
+        //Bindview was giving null so temporary solution
         foodzRecyclerView = findViewById(R.id.recyclerView);
         foodzRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
