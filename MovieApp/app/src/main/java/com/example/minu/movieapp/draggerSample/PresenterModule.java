@@ -1,4 +1,4 @@
-package com.example.minu.movieapp.dragger;
+package com.example.minu.movieapp.draggerSample;
 
 import android.content.Context;
 
@@ -11,8 +11,8 @@ import dagger.Provides;
 public class PresenterModule {
     @Provides
     @Singleton
-    FoodzPresenter provideFoodzPresenter(Context context) {
-        return new FoodzPresenterImpl(context);
+    FilmPresenter provideFoodzPresenter(Context context) {
+        return new FilmPresenterImpl(context);
     }
 
 }

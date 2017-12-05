@@ -1,12 +1,9 @@
-package com.example.minu.movieapp.dragger;
+package com.example.minu.movieapp.draggerSample;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.example.minu.movieapp.R;
 import com.example.minu.movieapp.adapter.MoviesAdapter;
@@ -20,9 +17,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class FoodzActivity extends AppCompatActivity implements FoodzView {
+public class FilmActivity extends AppCompatActivity implements FilmView {
     @Inject
-    FoodzPresenter presenter;
+    FilmPresenter presenter;
 
     @BindView(R.id.recyclerView)
     RecyclerView foodzRecyclerView;
@@ -36,7 +33,7 @@ public class FoodzActivity extends AppCompatActivity implements FoodzView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.popular_fragment);
 
-        ((DeezFoodApplication) getApplication()).getAppComponent().inject(this);
+        ((FilmApplication) getApplication()).getAppComponent().inject(this);
 
         ButterKnife.bind(this);
         foodzRecyclerView = findViewById(R.id.recyclerView);
@@ -47,7 +44,7 @@ public class FoodzActivity extends AppCompatActivity implements FoodzView {
     }
 
   /*
-   * FoodzView
+   * FilmView
    */
 
     @Override

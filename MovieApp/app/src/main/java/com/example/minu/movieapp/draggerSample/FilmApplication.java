@@ -1,10 +1,10 @@
-package com.example.minu.movieapp.dragger;
+package com.example.minu.movieapp.draggerSample;
 
 import android.app.Application;
 
 
 
-public class DeezFoodApplication extends Application {
+public class FilmApplication extends Application {
     private AppComponent appComponent ;
 
 
@@ -18,7 +18,7 @@ public class DeezFoodApplication extends Application {
         return appComponent;
     }
 
-    protected AppComponent initDagger(DeezFoodApplication application) {
+    protected AppComponent initDagger(FilmApplication application) {
         return DaggerAppComponent.builder()
                 .appModule(new AppModule(application))
                 .build();

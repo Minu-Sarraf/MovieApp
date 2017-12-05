@@ -1,4 +1,4 @@
-package com.example.minu.movieapp.dragger;
+package com.example.minu.movieapp.draggerSample;
 
 import android.app.Application;
 import android.content.Context;

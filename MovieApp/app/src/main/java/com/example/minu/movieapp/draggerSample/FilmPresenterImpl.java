@@ -1,16 +1,13 @@
-package com.example.minu.movieapp.dragger;
+package com.example.minu.movieapp.draggerSample;
 
 import android.content.Context;
 
-import com.example.minu.movieapp.adapter.MoviesAdapter;
 import com.example.minu.movieapp.model.MoviePopular;
 import com.example.minu.movieapp.model.MoviesResponse;
 import com.example.minu.movieapp.rest.ApiInterface;
 import com.example.minu.movieapp.rest.ApiList;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.inject.Inject;
 
@@ -20,19 +17,19 @@ import retrofit2.Response;
 
 
 
-class FoodzPresenterImpl implements FoodzPresenter {
-    private FoodzView view;
+class FilmPresenterImpl implements FilmPresenter {
+    private FilmView view;
     List<MoviePopular> movies;
     @Inject
     ApiInterface usdaApi;
 
 
-    public FoodzPresenterImpl(Context context) {
-        ((DeezFoodApplication) context).getAppComponent().inject(this);
+    public FilmPresenterImpl(Context context) {
+        ((FilmApplication) context).getAppComponent().inject(this);
     }
 
     @Override
-    public void setView(FoodzView view) {
+    public void setView(FilmView view) {
         this.view = view;
     }
 

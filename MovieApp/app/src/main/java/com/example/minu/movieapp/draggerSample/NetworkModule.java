@@ -1,6 +1,6 @@
 
 
-package com.example.minu.movieapp.dragger;
+package com.example.minu.movieapp.draggerSample;
 
 import com.example.minu.movieapp.rest.ApiInterface;
 import com.example.minu.movieapp.rest.ApiList;
