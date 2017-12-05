@@ -11,7 +11,7 @@ public interface FilmView {
 
     void hideLoading();
 
-    void showFoodz(List<MoviePopular> foodzItemList);
+    void showFilmz(List<MoviePopular> filmzItemList);
 
     void showErrorMessage();
 
