@@ -22,7 +22,7 @@ public class FilmActivity extends AppCompatActivity implements FilmView {
     FilmPresenter presenter;
 
     @BindView(R.id.recyclerView)
-    RecyclerView foodzRecyclerView;
+    RecyclerView filmzRecyclerView;
 
 
    //// @BindView(R.id.popular_fragment)
@@ -38,11 +38,13 @@ public class FilmActivity extends AppCompatActivity implements FilmView {
         ButterKnife.bind(this);
 
         //Bindview was giving null so temporary solution
-        foodzRecyclerView = findViewById(R.id.recyclerView);
-        foodzRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        filmzRecyclerView = findViewById(R.id.recyclerView);
+        
+        
+        filmzRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         presenter.setView(this);
-        presenter.getFoodz();
+        presenter.getFilmz();
     }
 
   /*
@@ -61,13 +63,13 @@ public class FilmActivity extends AppCompatActivity implements FilmView {
     MoviesAdapter mAdapter;
 
     @Override
-    public void showFoodz(List<MoviePopular>movies) {
+    public void showFilmz(List<MoviePopular>movies) {
         mAdapter = new MoviesAdapter(this);
 
-        foodzRecyclerView.setAdapter(mAdapter);
+        filmzRecyclerView.setAdapter(mAdapter);
         mAdapter.setMovieList(movies);
 //        mAdapter.setCallback((MoviesAdapter.AdapterCallback) this);
-        foodzRecyclerView.getAdapter().notifyDataSetChanged();
+        filmzRecyclerView.getAdapter().notifyDataSetChanged();
     }
 
 
