@@ -34,7 +34,7 @@ class FilmPresenterImpl implements FilmPresenter {
     }
 
     @Override
-    public void getFoodz() {
+    public void getFilmz() {
         view.showLoading();
 
         usdaApi.getPopularMovies(ApiList.API_KEY).enqueue(new Callback<MoviesResponse>() {
@@ -48,7 +48,7 @@ class FilmPresenterImpl implements FilmPresenter {
                 } else {
 
                     movies = response.body().getResults();
-                    view.showFoodz(movies);
+                    view.showFilmz(movies);
                 }
 
                 view.hideLoading();
